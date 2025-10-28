@@ -97,3 +97,57 @@ listButton.addEventListener('click', listItems);
 
 // Initial call to populate the list when the page loads
 listItems();
+// DOM Element references
+const jokeButton = document.getElementById('joke-button');
+const jokeSetup = document.getElementById('joke-setup');
+const jokePunchline = document.getElementById('joke-punchline');
+
+// The URL for the public API
+const API_URL = 'https://official-joke-api.appspot.com/random_joke';
+
+// Function to fetch and display the joke
+async function fetchJoke() {
+    // 1. Setup - Disable button, show loading state
+    jokeButton.disabled = true;
+    jokeButton.textContent = 'Loading...';
+    jokeSetup.textContent = 'Fetching joke setup...';
+    jokePunchline.textContent = ''; // Clear previous punchline    
+
+    try {
+        // 2. Fetch the data (Network Request)
+        // This is the core of consuming the API
+        const response = await fetch(API_URL);
+
+        // Check if the response was successful (e.g., HTTP status 200)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // 3. Parse the data (Convert JSON to a JavaScript object)
+        const jokeData = await response.json();
+
+        // 4. Update the DOM (Display the results)
+        jokeSetup.textContent = jokeData.setup; // Display the first part
+
+        // Delay displaying the punchline for dramatic effect!
+        setTimeout(() => {
+            jokePunchline.textContent = jokeData.punchline;            
+        }, 3000); // Wait 3 seconds
+
+    } catch (error) {
+        // 5. Error Handling
+        jokeSetup.textContent = '😬 Error fetching joke. Check console for details.';
+        console.error('Failed to fetch joke:', error);
+    } finally {
+        // 6. Cleanup (Runs regardless of success or failure)
+        // Re-enable the button
+        jokeButton.textContent = 'Fetch Another Joke';
+        jokeButton.disabled = false;
+    }
+}
+
+// Event Listener: Start fetching a joke when the button is clicked
+jokeButton.addEventListener('click', fetchJoke);
+
+// Fetch a joke immediately when the page loads for the first time
+window.onload = fetchJoke;

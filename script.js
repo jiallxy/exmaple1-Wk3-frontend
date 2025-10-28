@@ -103,7 +103,7 @@ const jokeSetup = document.getElementById('joke-setup');
 const jokePunchline = document.getElementById('joke-punchline');
 
 // The URL for the public API
-const API_URL = 'https://apis.tianapi.com/joke/index?key=你的APIKEY&num=10';
+const API_URL = 'https://official-joke-api.appspot.com/random_joke provide english';
 
 // Function to fetch and display the joke
 async function fetchJoke() {

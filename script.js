@@ -103,14 +103,14 @@ const jokeSetup = document.getElementById('joke-setup');
 const jokePunchline = document.getElementById('joke-punchline');
 
 // The URL for the public API
-const API_URL = 'https://official-joke-api.appspot.com/random_joke';
+const API_URL = 'https://apis.tianapi.com/joke/index?key=你的APIKEY&num=10';
 
 // Function to fetch and display the joke
 async function fetchJoke() {
     // 1. Setup - Disable button, show loading state
     jokeButton.disabled = true;
-    jokeButton.textContent = 'Loading...';
-    jokeSetup.textContent = 'Fetching joke setup...';
+    jokeButton.textContent = '加载...';
+    jokeSetup.textContent = '笑话头...';
     jokePunchline.textContent = ''; // Clear previous punchline    
 
     try {
@@ -141,7 +141,7 @@ async function fetchJoke() {
     } finally {
         // 6. Cleanup (Runs regardless of success or failure)
         // Re-enable the button
-        jokeButton.textContent = 'Fetch Another Joke';
+        jokeButton.textContent = '另一个笑话';
         jokeButton.disabled = false;
     }
 }

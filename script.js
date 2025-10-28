@@ -103,7 +103,7 @@ const jokeSetup = document.getElementById('joke-setup');
 const jokePunchline = document.getElementById('joke-punchline');
 
 // The URL for the public API
-const API_URL = 'https://official-joke-api.appspot.com/random_joke provide english';
+const API_URL = 'https://official-joke-api.appspot.com/random_joke';
 
 // Function to fetch and display the joke
 async function fetchJoke() {

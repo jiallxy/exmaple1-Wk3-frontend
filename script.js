@@ -105,42 +105,49 @@ const jokePunchline = document.getElementById('joke-punchline');
 // ⚠️ 把 “你的APIKEY” 替换为你自己的 key
 const API_URL = 'https://official-joke-api.appspot.com/random_joke';
 
+// Function to fetch and display the joke
 async function fetchJoke() {
+    // 1. Setup - Disable button, show loading state
     jokeButton.disabled = true;
-    jokeButton.textContent = '加载中...';
-    jokeSetup.textContent = '获取笑话中...';
-    jokePunchline.textContent = '';
+    jokeButton.textContent = 'Loading...';
+    jokeSetup.textContent = 'Fetching joke setup...';
+    jokePunchline.textContent = ''; // Clear previous punchline    
 
     try {
+        // 2. Fetch the data (Network Request)
+        // This is the core of consuming the API
         const response = await fetch(API_URL);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
+        // Check if the response was successful (e.g., HTTP status 200)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // 3. Parse the data (Convert JSON to a JavaScript object)
         const jokeData = await response.json();
-        console.log(jokeData)
-        // 🌟 天行API返回结构示例：
-        // {
-        //   "code":200,
-        //   "msg":"success",
-        //   "result":[{"content":"你知道程序员为什么喜欢喝咖啡吗？因为Java！"}]
-        // }
 
-        const jokeText = jokeData?.result?.[0]?.content || '未获取到笑话内容';
-        
-        // 如果你想模仿 setup / punchline 的形式，可以这样：
-        const [setup, punchline] = jokeText.split('？');
-        jokeSetup.textContent = setup + (punchline ? '？' : '');
-        
+        // 4. Update the DOM (Display the results)
+        jokeSetup.textContent = jokeData.setup; // Display the first part
+
+        // Delay displaying the punchline for dramatic effect!
         setTimeout(() => {
-            jokePunchline.textContent = punchline || '';
-        }, 2000);
+            jokePunchline.textContent = jokeData.punchline;            
+        }, 3000); // Wait 3 seconds
+
     } catch (error) {
-        jokeSetup.textContent = '😬 获取笑话失败，请查看控制台。';
+        // 5. Error Handling
+        jokeSetup.textContent = '😬 Error fetching joke. Check console for details.';
         console.error('Failed to fetch joke:', error);
     } finally {
+        // 6. Cleanup (Runs regardless of success or failure)
+        // Re-enable the button
+        jokeButton.textContent = 'Fetch Another Joke';
         jokeButton.disabled = false;
-        jokeButton.textContent = '再来一个';
     }
 }
 
+// Event Listener: Start fetching a joke when the button is clicked
 jokeButton.addEventListener('click', fetchJoke);
+
+// Fetch a joke immediately when the page loads for the first time
 window.onload = fetchJoke;

@@ -103,7 +103,7 @@ const jokeSetup = document.getElementById('joke-setup');
 const jokePunchline = document.getElementById('joke-punchline');
 
 // ⚠️ 把 “你的APIKEY” 替换为你自己的 key
-const API_URL = 'https://apis.tianapi.com/joke/index?key=你的APIKEY&num=1';
+const API_URL = 'https://apis.tianapi.com/joke/index?key=你的APIKEY&num=10';
 
 async function fetchJoke() {
     jokeButton.disabled = true;

@@ -12,6 +12,28 @@
         <button id="getFact">Get Random Fact</button>
         <div id="factDisplay" class="fact-box"></div>
     </div>
+
+    <h1>Item Manager</h1>
+
+    <div class="container">
+        <section id="add-item">
+            <h2>Add New Item</h2>
+            <form id="item-form">
+                <input type="text" id="itemId"   placeholder="Enter item id" required>
+                <input type="text" id="itemText" placeholder="Enter item text" required>
+                <button type="submit">Save Item</button>
+            </form>
+            <p id="form-message"></p>
+        </section>
+
+        <section id="list-items">
+            <h2>Current Items</h2>
+            <button id="list-button">Refresh Item List</button>
+            <ul id="item-list-display">
+            </ul>
+        </section>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

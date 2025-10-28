@@ -103,7 +103,7 @@ const jokeSetup = document.getElementById('joke-setup');
 const jokePunchline = document.getElementById('joke-punchline');
 
 // ⚠️ 把 “你的APIKEY” 替换为你自己的 key
-const API_URL = 'https://apis.tianapi.com/joke/index?key=你的APIKEY&num=10';
+const API_URL = 'https://official-joke-api.appspot.com/random_joke';
 
 async function fetchJoke() {
     jokeButton.disabled = true;
@@ -116,7 +116,7 @@ async function fetchJoke() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const jokeData = await response.json();
-
+        console.log(jokeData)
         // 🌟 天行API返回结构示例：
         // {
         //   "code":200,

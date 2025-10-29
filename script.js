@@ -151,3 +151,77 @@ jokeButton.addEventListener('click', fetchJoke);
 
 // Fetch a joke immediately when the page loads for the first time
 window.onload = fetchJoke;
+
+// DOM Elements
+const imageIdInput = document.getElementById('imageIdInput');
+const imageDisplay = document.getElementById('imageDisplay');
+const statusMessage = document.getElementById('statusMessage');
+const loadingIndicator = document.getElementById('loadingIndicator');
+const placeholderText = document.getElementById('placeholderText');
+
+/**
+ * Core function to load and display an image based on an ID.
+ * It uses the image's onload and onerror events to handle status.
+ * @param {number} id - The photo ID to fetch (1-1000).
+ */
+function loadImage(id) {
+    // 1. Validation and Setup
+    const parsedId = parseInt(id);
+    if (isNaN(parsedId) || parsedId < 1 || parsedId > 1000) {
+        statusMessage.textContent = 'Please enter a valid number between 1 and 1000.';
+        return;
+    }
+
+    const imageUrl = `https://picsum.photos/id/${parsedId}/400/600`;
+
+    // 2. UI Update (Loading State)
+    statusMessage.textContent = `Loading Image ID #${parsedId}...`;
+    loadingIndicator.classList.remove('hidden');
+    placeholderText.classList.add('hidden');
+    imageDisplay.classList.remove('show'); // Hide image by removing 'show' class
+    imageDisplay.src = ''; // Clear the source immediately
+
+    // 3. Image Load Event Handling
+    // Event listener for successful image loading
+    imageDisplay.onload = () => {
+        loadingIndicator.classList.add('hidden');
+        imageDisplay.classList.add('show'); // Show image
+        statusMessage.textContent = `Image ID #${parsedId} loaded successfully.`;
+        // Clean up handlers
+        imageDisplay.onerror = null;
+        imageDisplay.onload = null;
+    };
+
+    // Event listener for loading failure (e.g., bad ID, network error)
+    imageDisplay.onerror = () => {
+        loadingIndicator.classList.add('hidden');
+        imageDisplay.src = ''; // Clear bad source
+        placeholderText.classList.remove('hidden');
+        statusMessage.textContent = `Error: Image ID #${parsedId} failed to load or does not exist. Please try a different ID.`;
+        // Clean up handlers
+        imageDisplay.onerror = null;
+        imageDisplay.onload = null;
+    };
+
+    // 4. Trigger the Fetch/Load
+    // By setting the src attribute, the browser immediately makes the fetch request.
+    imageDisplay.src = imageUrl;
+    imageIdInput.value = parsedId; // Update input field to show loaded ID
+}
+
+/**
+ * Handles loading an image based on the manual input field value.
+ */
+function loadManualImage() {
+    const id = imageIdInput.value;
+    loadImage(id);
+}
+
+/**
+ * Handles generating and loading a random image ID between 1 and 100.
+ */
+function loadRandomImage() {
+    // Generate random number between 1 and 100 (inclusive)
+    const randomId = Math.floor(Math.random() * 1000) + 1;
+    loadImage(randomId);
+}

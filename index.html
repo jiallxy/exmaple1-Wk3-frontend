@@ -6,7 +6,49 @@
     <title>Random Facts Display</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="card-container">
+        <header>
+            <h1 class="card-title">Picsum Image Explorer</h1>
+            <p class="card-subtitle">Load an image using a Picsum Photo ID (1-1000).</p>
+        </header>
+
+        <!-- Input and Control Area -->
+        <div class="control-group">
+            <input type="number" id="imageIdInput" min="1" max="1000" placeholder="Enter ID (1-1000)"
+                class="image-input" />
+
+            <button onclick="loadManualImage()" class="custom-button load-btn">
+                Load Image
+            </button>
+
+            <button onclick="loadRandomImage()" class="custom-button random-btn">
+                Random (1-1000)
+            </button>
+        </div>
+
+        <!-- Status Message Area -->
+        <div id="statusMessage" class="status-message">
+            Ready to load an image.
+        </div>
+
+        <!-- Image Display Area -->
+        <div class="image-display-area">
+            <!-- Loading Spinner (initially hidden) -->
+            <div id="loadingIndicator" class="hidden loader"></div>
+
+            <!-- Image Element -->
+            <img id="imageDisplay" src="" alt="Loaded Image from Picsum" class="image-display">
+
+            <!-- Placeholder Text -->
+            <p id="placeholderText" class="placeholder-text">
+                Your image will appear here (400x600)
+            </p>
+        </div>
+
+    </div>
+
     <div class="container">
         <h1>Random Facts</h1>
         <button id="getFact">Get Random Fact</button>

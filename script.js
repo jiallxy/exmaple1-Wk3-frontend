@@ -225,3 +225,33 @@ function loadRandomImage() {
     const randomId = Math.floor(Math.random() * 1000) + 1;
     loadImage(randomId);
 }
+
+const displayDiv = document.querySelector('#displayDiv');
+
+const actionBtn = document.querySelector('#actionButton');
+
+actionBtn.addEventListener('click', getImage);
+
+async function getImage() {
+    let resp = await fetch('https://api.thecatapi.com/v1/images/search');    
+    let data = await resp.json();
+    //console.log(data);
+
+    let myImg = document.createElement('img');      
+    myImg.src = data[0].url;      
+
+    displayDiv.innerHTML = "";  // clear any previous image
+    displayDiv.appendChild(myImg);
+}
+
+
+//leave this in to get an image right away
+//getImage();
+
+
+/*
+// auto-refresh with a new cat image every 10 secs
+setInterval( () => {
+    getImage();    
+}, 10000);
+*/
